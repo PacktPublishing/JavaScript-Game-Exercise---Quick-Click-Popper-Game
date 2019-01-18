@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>JavaScript Game</title>
+    <style>
+    .btn{
+        cursor: pointer;
+        padding: 15px;
+        border: 1px solid black;
+        text-align: center;
+        background-color: blue;
+        color:white;
+    }
+        .page{
+            display: none;
+        }
+        .visible{
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+<div class="gamearea">
+    <div class="stats"></div>
+    <div class="main page">
+        <div class="starter">
+            <a class="btn newGame">New Game</a>
+        </div>
+    </div>
+    <div class="game page">
+    </div>
+</div>
+<script>
+const playArea = {};
+const player = {};
+let gameObj;
+
+
+playArea.stats = document.querySelector(".stats");
+playArea.main = document.querySelector(".main");
+playArea.game = document.querySelector(".game");
+playArea.btns = Array.from(document.querySelectorAll(".btn"));
+playArea.page = Array.from(document.querySelectorAll(".page"));
+document.addEventListener("DOMContentLoaded",getData);
+
+
+playArea.btns.forEach(function(item){
+    item.addEventListener('click',handleBtn);
+})
+
+function getData(){
+   playArea.main.classList.add("visible"); fetch("https://api.myjson.com/bins/gungm").then(function(rep){
+        return rep.json();
+    }).then(function(data){
+        gameObj = data.data;
+        console.log(gameObj);
+    })
+}
+
+function handleBtn(e){
+    if(e.target.classList.contains("newGame")){
+        console.log("YES");
+        startGame();
+    }
+}
+
+function startGame(){
+    player.score = 0;
+    player.items = 3;
+    playArea.main.classList.remove("visible");
+    playArea.game.classList.add("visible");
+    console.log("start");
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
